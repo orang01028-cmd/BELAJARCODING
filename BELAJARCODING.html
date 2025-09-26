@@ -62,9 +62,9 @@
 
 <div class="container">
     <h1>Tebak Angka (1-100)</h1>
-    <p>Masukkan tebakan Anda:</p>
+    <p>lu nebak brapa:</p>
     <input type="number" id="guessInput" min="1" max="100" placeholder="Tulis angka di sini">
-    <button onclick="checkGuess()">Cek Tebakan</button>
+    <button onclick="checkGuess()">tebak</button>
     <p id="message"></p>
     <p>Percobaan: <span id="attempts">0</span></p>
 </div>
@@ -102,16 +102,16 @@
 
         // Logika Game
         if (userGuess === secretNumber) {
-            messageDisplay.textContent = `Selamat! Anda berhasil menebak angka ${secretNumber} dalam ${attempts} percobaan.`;
+            messageDisplay.textContent = `lu berhasil ${secretNumber} dalam ${attempts} percobaan.`;
             // Setelah menang, tambahkan tombol main lagi
             document.querySelector('.container').innerHTML += '<button onclick="startGame()">Main Lagi</button>';
             // Menonaktifkan input dan tombol cek
             guessInput.disabled = true;
             document.querySelector('button').disabled = true;
         } else if (userGuess < secretNumber) {
-            messageDisplay.textContent = 'Terlalu kecil! Coba lagi.';
+            messageDisplay.textContent = 'kurang gede.';
         } else {
-            messageDisplay.textContent = 'Terlalu besar! Coba lagi.';
+            messageDisplay.textContent = 'kecilin ngapa kegedean.';
         }
 
         // Membersihkan input untuk tebakan berikutnya
