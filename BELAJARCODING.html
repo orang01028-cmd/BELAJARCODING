@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Tebak Angka Sederhana</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            width: calc(100% - 22px);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+            min-height: 25px; /* Agar layout tidak bergeser */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Tebak Angka (1-100)</h1>
+    <p>Masukkan tebakan Anda:</p>
+    <input type="number" id="guessInput" min="1" max="100" placeholder="Tulis angka di sini">
+    <button onclick="checkGuess()">Cek Tebakan</button>
+    <p id="message"></p>
+    <p>Percobaan: <span id="attempts">0</span></p>
+</div>
+
+<script>
+    // ** Bagian JavaScript Game **
+    let secretNumber;
+    let attempts;
+
+    // Fungsi untuk memulai/mereset game
+    function startGame() {
+        // Menghasilkan angka acak antara 1 dan 100
+        secretNumber = Math.floor(Math.random() * 100) + 1;
+        attempts = 0;
+        document.getElementById('attempts').textContent = attempts;
+        document.getElementById('message').textContent = 'Game dimulai! Coba tebak angkanya.';
+        document.getElementById('guessInput').value = ''; // Mengosongkan input
+        console.log('Angka Rahasia (untuk debugging): ' + secretNumber);
+    }
+
+    // Fungsi untuk memeriksa tebakan
+    function checkGuess() {
+        const guessInput = document.getElementById('guessInput');
+        const userGuess = parseInt(guessInput.value);
+        const messageDisplay = document.getElementById('message');
+
+        // Validasi input
+        if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+            messageDisplay.textContent = 'Masukkan angka yang valid antara 1 dan 100.';
+            return;
+        }
+
+        attempts++;
+        document.getElementById('attempts').textContent = attempts;
+
+        // Logika Game
+        if (userGuess === secretNumber) {
+            messageDisplay.textContent = `Selamat! Anda berhasil menebak angka ${secretNumber} dalam ${attempts} percobaan.`;
+            // Setelah menang, tambahkan tombol main lagi
+            document.querySelector('.container').innerHTML += '<button onclick="startGame()">Main Lagi</button>';
+            // Menonaktifkan input dan tombol cek
+            guessInput.disabled = true;
+            document.querySelector('button').disabled = true;
+        } else if (userGuess < secretNumber) {
+            messageDisplay.textContent = 'Terlalu kecil! Coba lagi.';
+        } else {
+            messageDisplay.textContent = 'Terlalu besar! Coba lagi.';
+        }
+
+        // Membersihkan input untuk tebakan berikutnya
+        guessInput.value = '';
+        guessInput.focus();
+    }
+
+    // Memulai game saat halaman dimuat
+    window.onload = startGame;
+</script>
+
+</body>
+</html>
